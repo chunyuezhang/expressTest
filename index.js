@@ -28,13 +28,18 @@ app.get('/write',function(req,res){
             "<input type='submit'>"+
             "</form>"
   res.send(page)
-
+// res.redirect('http://baidu.com')
+})
+// 这是应该让用户看到的页面,一条路由只对应一个响应,那么问题来了...重定向
+app.get('/posts/',function(req,res){
+  // res.send('<h1>show this page</h1>')
+  // res.redireact('http://baidu.com')
 })
 
-//发布一篇文章
+//此路由不是用来返回页面,只是用来进行数据库保存的
 app.post('/posts2/',function(req,res){
-  // res.send('The Blog title is'+': ' + req.body.title)
-console.log("GET/posts222")
+  res.send('The Blog title is'+': ' + req.body.title)
+  console.log("GET/posts222")
   var post = new Post({
     title:req.body.title
   })
