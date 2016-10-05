@@ -34,15 +34,13 @@ app.get('/posts', function(req, res) {
 
 //此路由不是用来返回页面,只是用来进行数据库保存的
 app.post('/posts',function(req,res){
-  var post = new Post({
-    title:req.body.title
-  })
+  var post = new Post({title:req.body.title})
   // 异步操作,所有耗时的都执行异步操作
   post.save(function(err){
     if(err) return console.log(err);
     console.log('saved!');
   })
-  res.json({message:"成功!"})
+  res.json({ message:"成功!" })
 })
 
 app.listen(3000,function(){

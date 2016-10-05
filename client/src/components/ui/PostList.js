@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import map from 'lodash/fp/map';
 import axios from 'axios';
-
+import {Link} from 'react-router';
 
 export default class PostList extends Component {
   constructor() {
@@ -25,6 +25,19 @@ export default class PostList extends Component {
       },
       title: {
         fontSize: '1.2em'
+      },
+      link: {
+        display:'block',
+        fontSize: '1.5em',
+        color: '#fff',
+        textDecoration: 'none',
+        width:'120px',
+        height:'40px',
+        borderRadius:'5px',
+        backgroundColor: '#00bcd4',
+        textAlign:'center',
+        margin:'0 auto',
+        marginTop:'20px'
       }
     }
   }
@@ -43,12 +56,13 @@ export default class PostList extends Component {
     const postList = map((post) => {
       return (
         <div style={styles.content} key={post._id}>
-          <div style={styles.title}>{post.title}</div>
+        <div style={styles.title}>{post.title}</div>
         </div>
       )
     }, this.state.posts);
     return(
       <div>
+        <Link to='/write' style={styles.link}>写文章</Link>
         { postList }
       </div>
     );
