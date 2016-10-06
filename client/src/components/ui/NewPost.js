@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from './Form';
+import axios from 'axios';
 
 class NewPost extends Component {
   getStyles() {
@@ -19,16 +20,33 @@ class NewPost extends Component {
       }
     };
   }
+  newPost(data){
+    console.log(data);
+    //post /posts  这种写法according to REST api structure,例如把一篇博客当做一个资源(resource)
+    //GET /posts
+    //POST /posts
+    //GET /posts/:post_id
+    //PUT /posts/:post_id
+    //DELETE /posts/:post_id
 
+    axios.post('http://localhost:3000/posts',data)
+    .then( res => {
+      console.log(res.data.message);
+      this.context.router.push('/');
+    })
+  }
   render() {
     const styles = this.getStyles();
     return (
       <div style={styles.content}>
         <div style={styles.title}>写文章</div>
-        <Form />
+        <Form newPost={this.newPost.bind(this)}/>
       </div>
     );
   }
 }
+NewPost.contextTypes = {
+  router:React.PropTypes.object
+};
 
 export default NewPost;

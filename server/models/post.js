@@ -4,7 +4,13 @@ var Schema = mongoose.Schema;
 
 var PostSchema = new Schema(
   {
-    title:String
+    title:String,
+    catagory:String,
+    content:String
+  },
+  {
+    // 时间戳
+    timestamps:true
   }
 )
 

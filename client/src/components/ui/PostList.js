@@ -38,6 +38,11 @@ export default class PostList extends Component {
         textAlign:'center',
         margin:'0 auto',
         marginTop:'20px'
+      },
+      check: {
+        fontSize: '0.8em',
+        color:'red',
+        textDecoration:'none'
       }
     }
   }
@@ -56,7 +61,8 @@ export default class PostList extends Component {
     const postList = map((post) => {
       return (
         <div style={styles.content} key={post._id}>
-        <div style={styles.title}>{post.title}</div>
+          <div style={styles.title}>{post.title}</div>
+          <Link to={`/post/${post._id}`} style={styles.check}>查看</Link>
         </div>
       )
     }, this.state.posts);

@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var Post = require('./models/post');
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
@@ -24,17 +25,26 @@ db.once('open', function() {
   console.log('success!')
 });
 
-
 app.get('/posts', function(req, res) {
   Post.find().exec(function(err, posts) {
       res.json({posts:posts})
-  });
+  })
 })
 
+app.get('/post/:id',function(req,res){
+  Post.findOne({_id:req.params.id},function(err,doc){
+    if (err) return res.send('出错了');
+    res.json({post: doc})
+  })
+})
 
 //此路由不是用来返回页面,只是用来进行数据库保存的
 app.post('/posts',function(req,res){
-  var post = new Post({title:req.body.title})
+  var post = new Post({
+    title:req.body.title,
+    category:req.body.category,
+    content:req.body.content
+  })
   // 异步操作,所有耗时的都执行异步操作
   post.save(function(err){
     if(err) return console.log(err);
@@ -42,6 +52,22 @@ app.post('/posts',function(req,res){
   })
   res.json({ message:"成功!" })
 })
+
+// ------------------test------------------
+test.post('/tests',function(req,res){
+  var test = new Test({
+    title:req.body.title,
+    content:req.body.content
+  })
+  // 异步操作,所有耗时的都执行异步操作
+  post.save(function(err){
+    if(err) return console.log(err);
+    console.log('test data saved!');
+  })
+  res.json({ message:"成功!" })
+})
+
+// --------------------end test-----------------------
 
 app.listen(3000,function(){
   console.log('running on port 3000...')
